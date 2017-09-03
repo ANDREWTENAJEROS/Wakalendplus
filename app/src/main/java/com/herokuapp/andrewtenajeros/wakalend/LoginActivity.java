@@ -3,9 +3,14 @@ package com.herokuapp.andrewtenajeros.wakalend;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -20,6 +25,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -28,6 +34,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,19 +67,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+//    private UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+        mAuth = FirebaseAuth.getInstance();
+
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -75,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptLogin(false);
                     return true;
                 }
                 return false;
@@ -86,7 +102,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptLogin(false);
+            }
+        });
+
+        Button mRegisterButton = (Button) findViewById(R.id.email_registration_button);
+        mRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptLogin(true);
+            }
+        });
+
+        Button mNewclientButton = (Button) findViewById((R.id.NewclientButton));
+        mRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NewclientDialog dialog = new NewclientDialog();
+                dialog.show(getFragmentManager(),null);
             }
         });
 
@@ -143,8 +176,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
-        if (mAuthTask != null) {
+    private void attemptLogin(Boolean IsRegistering) {
+        if (mAuth == null) {
             return;
         }
 
@@ -185,8 +218,49 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+
+            if (IsRegistering){
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        showProgress(false);
+                        if(!task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this, "Can't register", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            //show user name dialouge
+                            UsernameDialogFragment dialog = new UsernameDialogFragment();
+                            dialog.show(getFragmentManager(),null);
+                        }
+
+                    }
+                });
+            }
+            else{//loging in
+
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                showProgress(false);
+                                if (task.isSuccessful()) {
+                                    Intent intent = new Intent(getBaseContext(),adminmenu.class);
+                                    startActivity(intent);
+
+                                } else {
+
+                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+
+                                }
+
+
+                            }
+                        });
+
+            }
+
         }
     }
 
@@ -294,57 +368,82 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
+    public static class UsernameDialogFragment extends DialogFragment{
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder.setView(inflater.inflate(R.layout.username_dialog, null))
+                    // Add action buttons
+                    .setPositiveButton(R.string.action_register, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // sign in the user ...
+                            EditText usernameField = (EditText)((AlertDialog)dialog).findViewById(R.id.username);
+                            EditText firstnameField = (EditText)((AlertDialog)dialog).findViewById(R.id.firstname);
+                            EditText lastnameField = (EditText)((AlertDialog)dialog).findViewById(R.id.lastname);
 
-            // TODO: register the new account here.
-            return true;
-        }
+                            String username = usernameField.getText().toString();
+                            String firstname = firstnameField.getText().toString();
+                            String lastname = lastnameField.getText().toString();
+                            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            User aUser = new User(username,firstname,lastname);
 
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
+                            FirebaseDatabase.getInstance().getReference("users").child(userId).child("profile").setValue(aUser);
 
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
+                            Intent intent = new Intent(getActivity().getBaseContext(), adminmenu.class);
+                        }
+                    });
+            return builder.create();
         }
     }
-}
 
+
+    public static class NewclientDialog extends DialogFragment {
+        @Override
+
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder.setView(inflater.inflate(R.layout.newclient_dialog, null))
+                    // Add action buttons
+                    .setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            EditText firstnameField = (EditText)((AlertDialog)dialog).findViewById(R.id.firstname);
+                            EditText lastnameField = (EditText)((AlertDialog)dialog).findViewById(R.id.lastname);
+                            EditText BarangayField = (EditText)((AlertDialog)dialog).findViewById(R.id.barangay);
+                            EditText DistrictField = (EditText)((AlertDialog)dialog).findViewById(R.id.district);
+                            EditText LoanField = (EditText)((AlertDialog)dialog).findViewById(R.id.loan);
+
+                            String firstname = firstnameField.getText().toString();
+                            String lastname = lastnameField.getText().toString();
+                            String barangay = BarangayField.getText().toString();
+                            String district = DistrictField.getText().toString();
+                            String loan = LoanField.getText().toString();
+
+                            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            Client aClient = new Client(firstname,lastname,barangay,district,loan);
+
+                            FirebaseDatabase.getInstance().getReference("users").child(userId).child("profile").setValue(aClient);
+
+//                        Intent intent = new Intent(getActivity().getBaseContext(), collectormenu.class);
+                        }
+                    });
+            return builder.create();
+        }
+    }
+
+}
