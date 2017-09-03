@@ -27,11 +27,11 @@
         android:id="@+id/NewclientButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
+        android:layout_gravity="bottom|center_horizontal"
         android:clickable="true"
         app:fabSize="mini"
         app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="center_vertical|right"
+        app:layout_anchorGravity="center_vertical|center_horizontal"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </android.support.design.widget.CoordinatorLayout>

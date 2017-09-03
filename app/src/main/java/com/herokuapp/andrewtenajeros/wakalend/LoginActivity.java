@@ -2,9 +2,11 @@ package com.herokuapp.andrewtenajeros.wakalend;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,6 +42,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -111,15 +114,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 attemptLogin(true);
-            }
-        });
-
-        Button mNewclientButton = (Button) findViewById((R.id.NewclientButton));
-        mRegisterButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NewclientDialog dialog = new NewclientDialog();
-                dialog.show(getFragmentManager(),null);
             }
         });
 
@@ -404,9 +398,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-
+//    @SuppressLint("ValidFragment")
     public static class NewclientDialog extends DialogFragment {
+        DatabaseReference Clientdb;
         @Override
+
+
 
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -415,6 +412,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout
+
+            Clientdb = FirebaseDatabase.getInstance().getReference("Client");
+
             builder.setView(inflater.inflate(R.layout.newclient_dialog, null))
                     // Add action buttons
                     .setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
@@ -426,6 +426,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             EditText BarangayField = (EditText)((AlertDialog)dialog).findViewById(R.id.barangay);
                             EditText DistrictField = (EditText)((AlertDialog)dialog).findViewById(R.id.district);
                             EditText LoanField = (EditText)((AlertDialog)dialog).findViewById(R.id.loan);
+                            String ClientID = Clientdb.push().getKey();
 
                             String firstname = firstnameField.getText().toString();
                             String lastname = lastnameField.getText().toString();
@@ -434,14 +435,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             String loan = LoanField.getText().toString();
 
                             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                            Context context = getApplicationContext();
+                            Client aClient = new Client(ClientID,firstname,lastname,barangay,district,loan);
+                            Clientdb.child(ClientID).setValue(aClient);
+//                            Toast.makeText(LoginActivity.this, "Client added",Toast.LENGTH_LONG).show();
 
-                            Client aClient = new Client(firstname,lastname,barangay,district,loan);
-
-                            FirebaseDatabase.getInstance().getReference("users").child(userId).child("profile").setValue(aClient);
+//                            FirebaseDatabase.getInstance().getReference("users").child(userId).child("profile").setValue(aClient);
 
 //                        Intent intent = new Intent(getActivity().getBaseContext(), collectormenu.class);
                         }
                     });
+
+
             return builder.create();
         }
     }

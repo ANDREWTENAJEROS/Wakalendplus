@@ -3,6 +3,7 @@ package com.herokuapp.andrewtenajeros.wakalend;
 public class Client {
 
     public String barangay;
+    public String ClientID;
     public String firstname;
     public String lastname;
     public String district;
@@ -13,7 +14,8 @@ public class Client {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Client(String firstname, String lastname, String barangay, String district, String loan) {
+    public Client(String id, String firstname, String lastname, String barangay, String district, String loan) {
+        this.ClientID = id;
         this.barangay = barangay;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -21,4 +23,23 @@ public class Client {
         this.loan = loan;
     }
 
+    public String getBarangay() {
+        return barangay;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public String getLoan() {
+        return loan;
+    }
 }
