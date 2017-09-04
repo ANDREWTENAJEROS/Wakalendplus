@@ -40,6 +40,4 @@ public class adminmenu extends AppCompatActivity {
         });
     }
 
-//    @SuppressLint("ValidFragment")
-
 }
