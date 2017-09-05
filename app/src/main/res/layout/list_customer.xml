@@ -1,34 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
-    <TextView
-        android:id="@+id/textView_customername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:text="TextView" />
+
     <LinearLayout
+        android:layout_width="268dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
 
         <TextView
-            android:id="@+id/textView_balancetxt"
-            android:layout_width="match_parent"
+            android:id="@+id/textView_customername"
+            android:paddingTop="5dp"
+            android:layout_width="267dp"
+            android:paddingLeft="10dp"
             android:layout_height="wrap_content"
-            android:text="Balance:" />
+            android:text="@string/textview"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/textView_balanceval"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textStyle="bold" />
     </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/textView_balancetxt"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/balance" />
+
+            <TextView
+                android:id="@+id/textView_balanceval"
+                android:paddingLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textView_customername"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/viewcustomerbtn"
+        android:layout_width="99dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:onClick="viewcustomer"
+        android:text="@string/action_viewcutomer"
+        android:textAlignment="center" />
 
 </LinearLayout>

@@ -226,6 +226,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             //show user name dialouge
                             UsernameDialogFragment dialog = new UsernameDialogFragment();
                             dialog.show(getFragmentManager(),null);
+
                         }
 
                     }
@@ -390,11 +391,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             User aUser = new User(username,firstname,lastname);
 
                             FirebaseDatabase.getInstance().getReference("users").child(userId).child("profile").setValue(aUser);
-
-                            Intent intent = new Intent(getActivity().getBaseContext(), adminmenu.class);
+                            Intent intent = new Intent(getActivity().getBaseContext(),adminmenu.class);
+                            startActivity(intent);
                         }
+//                        Intent intent = new Intent(getActivity().getBaseContext(), adminmenu.class);
+
                     });
             return builder.create();
+
         }
     }
 
