@@ -40,10 +40,13 @@ public class adminmenu extends AppCompatActivity {
     DatabaseReference Clientdb;
     public ListView listViewClient;
     List<Client> clientList;
-    public void viewcustomer (View view){
-        Intent intent = new Intent(this, ClientProfileActivity.class );
-        startActivity(intent);
-    }
+    public static final String CLIENT_NAME ="clientname";
+    public static final String CLIENT_ID ="clientid";
+
+    //    public void viewcustomer (View view){
+//        Intent intent = new Intent(this, ClientProfileActivity.class );
+//        startActivity(intent);
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Clientdb = FirebaseDatabase.getInstance().getReference("Client");
@@ -52,7 +55,8 @@ public class adminmenu extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //show listview
+
+
 
         clientList = new ArrayList<>();
         listViewClient = (ListView) findViewById(R.id.ListViewCustomer);
@@ -66,6 +70,17 @@ public class adminmenu extends AppCompatActivity {
                 dialog.show(getFragmentManager(),null);
             }
         });
+        listViewClient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Client client = clientList.get(i);//get selected artist
+                Intent intent = new Intent(getApplicationContext(), ClientProfileActivity.class );
+                intent.putExtra(CLIENT_ID,client.getClientID());
+                String cname = client.getFirstname() + " " + client.getLastname();
+                intent.putExtra(CLIENT_NAME,cname);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -77,6 +92,7 @@ public class adminmenu extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot clientSnapshot: dataSnapshot.getChildren()){
                     Client client = clientSnapshot.getValue(Client.class);
+//                    clientList.clear();//trylang
                     clientList.add(client);
                 }
 
