@@ -1,11 +1,15 @@
 package com.herokuapp.andrewtenajeros.wakalend;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -49,25 +53,10 @@ public class adminmenu extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //show listview
+
         clientList = new ArrayList<>();
         listViewClient = (ListView) findViewById(R.id.ListViewCustomer);
-//        listViewClient.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(adminmenu.this, ClientProfileActivity.class );
-//            }
-//        });
 
-
-
-//        Button mViewcustomerbtn = (Button) findViewById(R.id.viewcustomerbtn);
-//        mViewcustomerbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //intent call java class
-//                Intent intent = new Intent(adminmenu.this, ClientProfileActivity.class );
-//            }
-//        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.NewclientButton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -101,4 +90,6 @@ public class adminmenu extends AppCompatActivity {
             }
         });
     }
+//    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+
 }
