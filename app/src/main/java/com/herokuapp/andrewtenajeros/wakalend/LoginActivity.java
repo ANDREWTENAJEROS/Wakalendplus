@@ -392,6 +392,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             FirebaseDatabase.getInstance().getReference("users").child(userId).child("profile").setValue(aUser);
 
                             Intent intent = new Intent(getActivity().getBaseContext(), adminmenu.class);
+                            startActivity(intent);
                         }
                     });
             return builder.create();
@@ -445,6 +446,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                        Intent intent = new Intent(getActivity().getBaseContext(), collectormenu.class);
                         }
                     });
+//                        Intent intent = new Intent(getActivity().getBaseContext(), collectormenu.class);
 
 
             return builder.create();

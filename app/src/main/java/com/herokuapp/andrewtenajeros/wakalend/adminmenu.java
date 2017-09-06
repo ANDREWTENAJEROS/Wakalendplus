@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -33,6 +35,9 @@ public class adminmenu extends AppCompatActivity {
     DatabaseReference Clientdb;
     public ListView listViewClient;
     List<Client> clientList;
+    public static final String CLIENT_ID = "";
+    public static final String CLIENT_NAME = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Clientdb = FirebaseDatabase.getInstance().getReference("Client");
@@ -51,6 +56,18 @@ public class adminmenu extends AppCompatActivity {
                 dialog.show(getFragmentManager(),null);
             }
         });
+
+        listViewClient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Client client = clientList.get(i);//get selected artist
+                Intent intent = new Intent(getApplicationContext(), ClientProfileActivity.class );
+                intent.putExtra(CLIENT_ID,client.getId());
+                String cname = client.getFirstname() + " " + client.getLastname();
+                intent.putExtra(CLIENT_NAME,cname);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -60,6 +77,8 @@ public class adminmenu extends AppCompatActivity {
         Clientdb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                clientList.clear();
+
                 for(DataSnapshot clientSnapshot: dataSnapshot.getChildren()){
                     Client client = clientSnapshot.getValue(Client.class);
                     clientList.add(client);

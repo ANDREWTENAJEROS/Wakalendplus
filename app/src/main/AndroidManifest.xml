@@ -26,6 +26,10 @@
         <activity
             android:name=".adminmenu"
             android:label="@string/title_activity_adminmenu"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ClientProfileActivity"
+            android:label="@string/title_activity_client_profile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

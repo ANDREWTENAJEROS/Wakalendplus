@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.herokuapp.andrewtenajeros.wakalend.ClientProfileActivity"
+    tools:showIn="@layout/activity_client_profile">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+
+            >
+
+            <TextView
+                android:id="@+id/textView_balancetxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Balance:"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/textView_balanceval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+
+            >
+
+            <TextView
+                android:id="@+id/textView_loantxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loan:"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textView_loanval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+
+            >
+
+            <TextView
+                android:id="@+id/textView_barangaytxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Barangay:"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textView_barangayval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            >
+
+            <TextView
+                android:id="@+id/textView_districttxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="District:"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textView_districtval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="15dp"
+            android:text="Edit client details"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+        <EditText
+            android:id="@+id/firstname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hint_firstname"
+            android:inputType="textEmailAddress" />
+        <EditText
+            android:id="@+id/lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hint_lastname"
+            android:inputType="textEmailAddress" />
+        <EditText
+            android:id="@+id/barangay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hint_barangay"
+            android:inputType="textEmailAddress" />
+        <EditText
+            android:id="@+id/district"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp"
+            android:hint="district"
+            android:inputType="textEmailAddress" />
+        <EditText
+            android:id="@+id/loan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hint_loan"
+            android:inputType="textEmailAddress" />
+        <Button
+            android:id="@+id/EditclientButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/action_edit"
+            />
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

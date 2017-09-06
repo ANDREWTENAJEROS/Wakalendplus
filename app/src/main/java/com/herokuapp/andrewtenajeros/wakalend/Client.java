@@ -8,6 +8,8 @@ public class Client {
     public String lastname;
     public String district;
     public String loan ;
+    public String id;
+    public String balance;
 
 
     public Client() {
@@ -21,6 +23,7 @@ public class Client {
         this.lastname = lastname;
         this.district = district;
         this.loan = loan;
+        this.balance = loan;
     }
 
     public String getBarangay() {
@@ -41,5 +44,13 @@ public class Client {
 
     public String getLoan() {
         return loan;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getBalance() {
+        return balance;
     }
 }
