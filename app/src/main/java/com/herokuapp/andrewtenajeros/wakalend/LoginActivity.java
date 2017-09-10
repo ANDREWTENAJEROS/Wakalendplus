@@ -427,6 +427,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             EditText BarangayField = (EditText)((AlertDialog)dialog).findViewById(R.id.barangay);
                             EditText DistrictField = (EditText)((AlertDialog)dialog).findViewById(R.id.district);
                             EditText LoanField = (EditText)((AlertDialog)dialog).findViewById(R.id.loan);
+                            EditText DaysField = (EditText)((AlertDialog)dialog).findViewById(R.id.days);
+
                             String ClientID = Clientdb.push().getKey();
 
                             String firstname = firstnameField.getText().toString();
@@ -434,19 +436,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             String barangay = BarangayField.getText().toString();
                             String district = DistrictField.getText().toString();
                             String loan = LoanField.getText().toString();
+                            String days = DaysField.getText().toString();
+
 
                             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//                            Context context = getApplicationContext();
                             Client aClient = new Client(ClientID,firstname,lastname,barangay,district,loan);
+                            Debt debt = new Debt(loan, days);
                             Clientdb.child(ClientID).setValue(aClient);
-//                            Toast.makeText(LoginActivity.this, "Client added",Toast.LENGTH_LONG).show();
 
-//                            FirebaseDatabase.getInstance().getReference("users").child(userId).child("profile").setValue(aClient);
-
-//                        Intent intent = new Intent(getActivity().getBaseContext(), collectormenu.class);
                         }
                     });
-//                        Intent intent = new Intent(getActivity().getBaseContext(), collectormenu.class);
 
 
             return builder.create();
