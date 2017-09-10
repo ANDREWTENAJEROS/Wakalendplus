@@ -32,11 +32,19 @@ import java.util.List;
 
 public class adminmenu extends AppCompatActivity {
 
+
     DatabaseReference Clientdb;
     public ListView listViewClient;
     List<Client> clientList;
     public static final String CLIENT_ID = "";
     public static final String CLIENT_NAME = "";
+    public static final String CLIENT_BARANGAY = "";
+    public static final String CLIENT_DISTRICT = "";
+    public static final String CLIENT_BALANCE = "";
+    public static final String CLIENT_LOAN = "";
+//    private static final String CLIENT_COLLECTOR = "";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +68,9 @@ public class adminmenu extends AppCompatActivity {
         listViewClient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Client client = clientList.get(i);//get selected artist
+                Client client = clientList.get(i);
                 Intent intent = new Intent(getApplicationContext(), ClientProfileActivity.class );
                 intent.putExtra(CLIENT_ID,client.getId());
-                String cname = client.getFirstname() + " " + client.getLastname();
-                intent.putExtra(CLIENT_NAME,cname);
                 startActivity(intent);
             }
         });
