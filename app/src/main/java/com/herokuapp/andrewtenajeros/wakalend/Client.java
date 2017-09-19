@@ -8,7 +8,6 @@ public class Client {
     public String lastname;
     public String district;
     public String loan ;
-    public String id;
     public String balance;
 
 
@@ -47,7 +46,7 @@ public class Client {
     }
 
     public String getId() {
-        return id;
+        return ClientID;
     }
 
     public String getBalance() {

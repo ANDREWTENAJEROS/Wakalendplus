@@ -6,6 +6,10 @@ package com.herokuapp.andrewtenajeros.wakalend;
 
 public class Debt {
 
+<<<<<<< HEAD
+=======
+    public String ID;
+>>>>>>> origin/new1
     public String Loan;
     public String Balance;
     public String days_to_pay;
@@ -18,6 +22,13 @@ public class Debt {
         this.days_to_pay = days_to_pay;
     }
 
+<<<<<<< HEAD
+=======
+    public String getID() {
+        return ID;
+    }
+
+>>>>>>> origin/new1
     public void setCollector(String collector) {
         this.collector = collector;
     }
