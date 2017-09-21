@@ -12,6 +12,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,7 +45,7 @@ public class adminmenu extends AppCompatActivity {
     public static final String CLIENT_BALANCE = "";
     public static final String CLIENT_LOAN = "";
 //    private static final String CLIENT_COLLECTOR = "";
-
+    customerlist adapter;
 
 
     @Override
@@ -53,6 +55,7 @@ public class adminmenu extends AppCompatActivity {
         setContentView(R.layout.activity_adminmenu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        EditText Searchbox = (EditText)findViewById(R.id.search_bar);
 
         listViewClient = (ListView) findViewById(R.id.ListViewCustomer);
         clientList = new ArrayList<>();
@@ -72,6 +75,22 @@ public class adminmenu extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ClientProfileActivity.class );
                 intent.putExtra(CLIENT_ID,client.getId());
                 startActivity(intent);
+            }
+        });
+        Searchbox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                (adminmenu.this).adapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }

@@ -7,6 +7,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class ClientProfileActivity extends AppCompatActivity {
     TextView District;
     TextView Balance;
     TextView loan;
+//    Button EditButton =(Button)findViewById(R.id.editClient);
 
 
     @Override
@@ -45,6 +48,11 @@ public class ClientProfileActivity extends AppCompatActivity {
 //        textViewName.setText(intent.getStringExtra(adminmenu.CLIENT_NAME));
 //        textViewBalance.setText(intent.getStringExtra(adminmenu.CLIENT_BALANCE));
 //        textViewBarangay.setText(intent.getStringExtra(adminmenu.CLIENT_BARANGAY));
+//        EditButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //                TODO show edit client dialog
+//            }});
 
 
         ValueEventListener postListener = new ValueEventListener() {
@@ -103,7 +111,7 @@ public class ClientProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "user is deleted", Snackbar.LENGTH_LONG);
               deleteClient();
-                Toast.makeText(ClientProfileActivity.this, adminmenu.CLIENT_ID , Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClientProfileActivity.this, "Client is deleted", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), adminmenu.class );
                 startActivity(intent);
             }
@@ -115,7 +123,11 @@ public class ClientProfileActivity extends AppCompatActivity {
         String clientId = intent.getStringExtra(adminmenu.CLIENT_ID);
         Clientdb = FirebaseDatabase.getInstance().getReference("client").child(clientId);
         Toast.makeText(ClientProfileActivity.this, "delete: "+clientId , Toast.LENGTH_SHORT).show();
-        Clientdb.child("client").removeValue();
+//        Clientdb.child("client").child(clientId).removeValue();
+//        Clientdb.child("client").child(clientId).setValue(null);
+//        Clientdb.child("client").setValue(null);
+//        Clientdb.child(clientId).setValue(null);
+        Clientdb.child(clientId).removeValue();
 //        Clientdb.removeValue();
     }
 

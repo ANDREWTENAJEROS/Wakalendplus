@@ -38,15 +38,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name:"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView_Clientval"
-                    android:layout_width="120dp"
+                    android:layout_width="264dp"
                     android:layout_height="wrap_content"
                     android:text="14-B"
-                    android:textSize="30sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
@@ -63,14 +63,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Barangay:"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView_barangayval"
-                android:layout_width="match_parent"
+                android:layout_width="306dp"
                 android:layout_height="wrap_content"
                 android:text="14-B"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
@@ -85,15 +85,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="District:"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView_districtval"
-                android:layout_width="match_parent"
+                android:layout_width="322dp"
                 android:layout_height="wrap_content"
-                android:text="Sta. Ana"
                 android:paddingLeft="10dp"
-                android:textSize="24sp"
+                android:text="Sta. Ana"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -163,16 +163,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Balance:"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView_balanceval"
-                android:layout_width="match_parent"
+                android:layout_width="281dp"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <!--<Button-->
+            <!--android:id="@+id/editClient"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="EDIT" />-->
         <!--<TextView-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"-->
