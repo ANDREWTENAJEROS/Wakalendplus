@@ -68,7 +68,7 @@
 
             <TextView
                 android:id="@+id/textView_barangayval"
-                android:layout_width="263dp"
+                android:layout_width="278dp"
                 android:layout_height="wrap_content"
                 android:text="14-B"
                 android:textSize="24sp"

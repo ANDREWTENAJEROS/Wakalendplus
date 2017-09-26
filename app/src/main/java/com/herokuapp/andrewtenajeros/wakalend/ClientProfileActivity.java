@@ -120,6 +120,9 @@ public class ClientProfileActivity extends AppCompatActivity {
         Clientdb = FirebaseDatabase.getInstance().getReference("client").child(clientId);
         Toast.makeText(ClientProfileActivity.this, "delete: "+clientId , Toast.LENGTH_SHORT).show();
         Clientdb.child("client").removeValue();
+        Clientdb.child("client").child(clientId).setValue(null);
+
+
 //        Clientdb.removeValue();
     }
 
