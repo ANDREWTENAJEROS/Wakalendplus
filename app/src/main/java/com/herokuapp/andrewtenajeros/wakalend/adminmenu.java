@@ -32,7 +32,6 @@ import java.util.List;
 
 public class adminmenu extends AppCompatActivity {
 
-
     DatabaseReference Clientdb;
     public ListView listViewClient;
     List<Client> clientList;
@@ -43,9 +42,6 @@ public class adminmenu extends AppCompatActivity {
     public static final String CLIENT_BALANCE = "";
     public static final String CLIENT_LOAN = "";
 //    private static final String CLIENT_COLLECTOR = "";
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Clientdb = FirebaseDatabase.getInstance().getReference("Client");

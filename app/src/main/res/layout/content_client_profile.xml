@@ -43,7 +43,7 @@
 
                 <TextView
                     android:id="@+id/textView_Clientval"
-                    android:layout_width="120dp"
+                    android:layout_width="304dp"
                     android:layout_height="wrap_content"
                     android:text="14-B"
                     android:textSize="30sp"
@@ -62,12 +62,12 @@
                 android:id="@+id/textView_barangaytxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Barangay:"
+                android:text="Address:"
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView_barangayval"
-                android:layout_width="match_parent"
+                android:layout_width="263dp"
                 android:layout_height="wrap_content"
                 android:text="14-B"
                 android:textSize="24sp"
@@ -84,12 +84,12 @@
                 android:id="@+id/textView_districttxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="District:"
+                android:text="Contact number:"
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView_districtval"
-                android:layout_width="match_parent"
+                android:layout_width="285dp"
                 android:layout_height="wrap_content"
                 android:text="Sta. Ana"
                 android:paddingLeft="10dp"
@@ -167,7 +167,7 @@
 
             <TextView
                 android:id="@+id/textView_balanceval"
-                android:layout_width="match_parent"
+                android:layout_width="255dp"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textSize="30sp"

@@ -226,8 +226,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             //show user name dialouge
                             UsernameDialogFragment dialog = new UsernameDialogFragment();
                             dialog.show(getFragmentManager(),null);
-                        }
 
+                        }
                     }
                 });
             }

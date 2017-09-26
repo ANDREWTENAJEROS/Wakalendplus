@@ -78,6 +78,10 @@ public class ClientProfileActivity extends AppCompatActivity {
                 textViewDistrict.setText(client.getDistrict());
                 textViewBalance.setText(client.getBalance());
 
+                if(client.getBarangay()=="0"){ //DELETE CLIENT IF BALANCE IS 0
+                    deleteClient();
+                }
+
             }
 
             @Override
