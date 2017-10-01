@@ -36,11 +36,6 @@ public class adminmenu extends AppCompatActivity {
     public ListView listViewClient;
     List<Client> clientList;
     public static final String CLIENT_ID = "";
-    public static final String CLIENT_NAME = "";
-    public static final String CLIENT_BARANGAY = "";
-    public static final String CLIENT_DISTRICT = "";
-    public static final String CLIENT_BALANCE = "";
-    public static final String CLIENT_LOAN = "";
 //    private static final String CLIENT_COLLECTOR = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +65,22 @@ public class adminmenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
+
+    }
+    @Override
+    public void onBackPressed() {
+
+    }
     @Override
     protected void onStart() {
         super.onStart();
-
+//        String id= getIntent().getStringExtra(ClientProfileActivity.CID);
+//        Toast.makeText(this, "ID: "+id , Toast.LENGTH_SHORT).show();
+//        if(id!=null){
+//            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Client").child(id);
+//            databaseReference.removeValue();
+//        }
         Clientdb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

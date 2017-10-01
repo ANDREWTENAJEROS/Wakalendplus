@@ -387,7 +387,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             String firstname = firstnameField.getText().toString();
                             String lastname = lastnameField.getText().toString();
                             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+
                             User aUser = new User(username,firstname,lastname);
+
 
                             FirebaseDatabase.getInstance().getReference("users").child(userId).child("profile").setValue(aUser);
 
@@ -438,9 +442,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             String loan = LoanField.getText().toString();
                             String days = DaysField.getText().toString();
 
+                            if(TextUtils.isEmpty(firstname)){
+                                firstnameField.setError("First Name is required");
+                            }
+                            if(TextUtils.isEmpty(lastname)){
+                                lastnameField.setError("Last Name is required");
+                            }
+                            if(TextUtils.isEmpty(barangay)){
+                                BarangayField.setError("Address is required");
+                            }
+                            if(TextUtils.isEmpty(district)){
+                                DistrictField.setError("Contact number is required");
+                            }
+                            if(TextUtils.isEmpty(loan)){
+                                LoanField.setError("Loan amount is required");
+                            }
+                            if(TextUtils.isEmpty(days)){
+                                DaysField.setError("Days to pay is required");
+                            }
 
                             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            Client aClient = new Client(ClientID,firstname,lastname,barangay,district,loan);
+                            Client aClient = new Client(ClientID,firstname,lastname,barangay,district,loan,days);
                             Debt debt = new Debt(loan, days);
                             Clientdb.child(ClientID).setValue(aClient);
 

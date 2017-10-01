@@ -31,7 +31,9 @@
 
             android:name=".ClientProfileActivity"
             android:label="@string/title_activity_client_profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+
+            ></activity>
     </application>
 
 </manifest>

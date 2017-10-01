@@ -9,13 +9,14 @@ public class Client {
     public String district;
     public String loan ;
     public String balance;
+    public String daystopay;
 
 
     public Client() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Client(String id, String firstname, String lastname, String barangay, String district, String loan) {
+    public Client(String id, String firstname, String lastname, String barangay, String district, String loan, String days) {
         this.ClientID = id;
         this.barangay = barangay;
         this.firstname = firstname;
@@ -23,6 +24,7 @@ public class Client {
         this.district = district;
         this.loan = loan;
         this.balance = loan;
+        this.daystopay = days;
     }
 
     public String getBarangay() {
