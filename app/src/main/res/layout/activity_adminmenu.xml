@@ -42,10 +42,33 @@
         layout="@layout/content_adminmenu" />
 
     <ListView
-        android:padding="5dp"
-        android:layout_marginTop="50dp"
         android:id="@+id/ListViewCustomer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="110dp"
+        android:padding="5dp" />
+
+    <TextView
+        android:id="@+id/cashvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:paddingTop="25dp"
+        android:text="Loading"
+        android:textSize="30sp"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="top|center_horizontal" />
+
+    <TextView
+        android:id="@+id/textcashonhand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="Cash on Hand"
+        android:paddingTop="5dp"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="top|center_horizontal" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

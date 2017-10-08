@@ -42,8 +42,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +82,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private double[] cash;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +125,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+
+
+
+
+
     }
 
     private void populateAutoComplete() {
@@ -223,6 +235,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             Toast.makeText(LoginActivity.this, "Can't register", Toast.LENGTH_SHORT).show();
                         }
                         else{
+                            //TODO email new user info
                             //show user name dialouge
                             UsernameDialogFragment dialog = new UsernameDialogFragment();
                             dialog.show(getFragmentManager(),null);
@@ -364,6 +377,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
 
     public static class UsernameDialogFragment extends DialogFragment{
+
         @Override
 
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -373,6 +387,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout
+
             builder.setView(inflater.inflate(R.layout.username_dialog, null))
                     // Add action buttons
                     .setPositiveButton(R.string.action_register, new DialogInterface.OnClickListener() {
@@ -390,7 +405,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
 
-                            User aUser = new User(username,firstname,lastname);
+                            User aUser = new User(username,firstname,lastname,"0");
 
 
                             FirebaseDatabase.getInstance().getReference("users").child(userId).child("profile").setValue(aUser);
@@ -404,74 +419,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 //    @SuppressLint("ValidFragment")
-    public static class NewclientDialog extends DialogFragment {
-        DatabaseReference Clientdb;
-        @Override
 
-
-
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            // Get the layout inflater
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-
-            // Inflate and set the layout for the dialog
-            // Pass null as the parent view because its going in the dialog layout
-
-            Clientdb = FirebaseDatabase.getInstance().getReference("Client");
-
-            builder.setView(inflater.inflate(R.layout.newclient_dialog, null))
-                    // Add action buttons
-                    .setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-
-                            EditText firstnameField = (EditText)((AlertDialog)dialog).findViewById(R.id.firstname);
-                            EditText lastnameField = (EditText)((AlertDialog)dialog).findViewById(R.id.lastname);
-                            EditText BarangayField = (EditText)((AlertDialog)dialog).findViewById(R.id.barangay);
-                            EditText DistrictField = (EditText)((AlertDialog)dialog).findViewById(R.id.district);
-                            EditText LoanField = (EditText)((AlertDialog)dialog).findViewById(R.id.loan);
-                            EditText DaysField = (EditText)((AlertDialog)dialog).findViewById(R.id.days);
-
-                            String ClientID = Clientdb.push().getKey();
-
-                            String firstname = firstnameField.getText().toString();
-                            String lastname = lastnameField.getText().toString();
-                            String barangay = BarangayField.getText().toString();
-                            String district = DistrictField.getText().toString();
-                            String loan = LoanField.getText().toString();
-                            String days = DaysField.getText().toString();
-
-                            if(TextUtils.isEmpty(firstname)){
-                                firstnameField.setError("First Name is required");
-                            }
-                            if(TextUtils.isEmpty(lastname)){
-                                lastnameField.setError("Last Name is required");
-                            }
-                            if(TextUtils.isEmpty(barangay)){
-                                BarangayField.setError("Address is required");
-                            }
-                            if(TextUtils.isEmpty(district)){
-                                DistrictField.setError("Contact number is required");
-                            }
-                            if(TextUtils.isEmpty(loan)){
-                                LoanField.setError("Loan amount is required");
-                            }
-                            if(TextUtils.isEmpty(days)){
-                                DaysField.setError("Days to pay is required");
-                            }
-
-                            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            Client aClient = new Client(ClientID,firstname,lastname,barangay,district,loan,days);
-                            Debt debt = new Debt(loan, days);
-                            Clientdb.child(ClientID).setValue(aClient);
-
-                        }
-                    });
-
-
-            return builder.create();
-        }
-    }
 
 }

@@ -12,12 +12,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,8 +37,13 @@ public class adminmenu extends AppCompatActivity {
     DatabaseReference Clientdb;
     public ListView listViewClient;
     List<Client> clientList;
+    TextView textcashonhand;
+    DatabaseReference CashDB;
     public static final String CLIENT_ID = "";
-//    private static final String CLIENT_COLLECTOR = "";
+    private static Double cash;
+    private static Double cash1;
+
+    //    private static final String CLIENT_COLLECTOR = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Clientdb = FirebaseDatabase.getInstance().getReference("Client");
@@ -44,14 +51,13 @@ public class adminmenu extends AppCompatActivity {
         setContentView(R.layout.activity_adminmenu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         listViewClient = (ListView) findViewById(R.id.ListViewCustomer);
         clientList = new ArrayList<>();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.NewclientButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginActivity.NewclientDialog dialog = new LoginActivity.NewclientDialog();
+                NewclientDialog dialog = new NewclientDialog();
                 dialog.show(getFragmentManager(),null);
             }
         });
@@ -65,6 +71,23 @@ public class adminmenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        textcashonhand =(TextView) findViewById(R.id.cashvalue);
+        CashDB = FirebaseDatabase.getInstance().getReference("cashonhand");
+        CashDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                cash = Double.parseDouble(dataSnapshot.getValue().toString());
+                textcashonhand.setText(cash.toString());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
 
     }
@@ -100,5 +123,78 @@ public class adminmenu extends AppCompatActivity {
 
             }
         });
+    }
+    public static class NewclientDialog extends DialogFragment {
+        DatabaseReference Clientdb;
+
+        @Override
+
+
+
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+
+            Clientdb = FirebaseDatabase.getInstance().getReference("Client");
+
+            builder.setView(inflater.inflate(R.layout.newclient_dialog, null))
+                    // Add action buttons
+                    .setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            EditText firstnameField = (EditText)((AlertDialog)dialog).findViewById(R.id.firstname);
+                            EditText lastnameField = (EditText)((AlertDialog)dialog).findViewById(R.id.lastname);
+                            EditText BarangayField = (EditText)((AlertDialog)dialog).findViewById(R.id.barangay);
+                            EditText DistrictField = (EditText)((AlertDialog)dialog).findViewById(R.id.district);
+                            EditText LoanField = (EditText)((AlertDialog)dialog).findViewById(R.id.loan);
+                            EditText DaysField = (EditText)((AlertDialog)dialog).findViewById(R.id.days);
+
+                            String ClientID = Clientdb.push().getKey();
+
+                            String firstname = firstnameField.getText().toString();
+                            String lastname = lastnameField.getText().toString();
+                            String barangay = BarangayField.getText().toString();
+                            String district = DistrictField.getText().toString();
+                            String loan = LoanField.getText().toString();
+                            String days = DaysField.getText().toString();
+
+                            if(TextUtils.isEmpty(firstname)){
+                                firstnameField.setError("First Name is required");
+                            }
+                            if(TextUtils.isEmpty(lastname)){
+                                lastnameField.setError("Last Name is required");
+                            }
+                            if(TextUtils.isEmpty(barangay)){
+                                BarangayField.setError("Address is required");
+                            }
+                            if(TextUtils.isEmpty(district)){
+                                DistrictField.setError("Contact number is required");
+                            }
+                            if(TextUtils.isEmpty(loan)){
+                                LoanField.setError("Loan amount is required");
+                            }
+                            if(TextUtils.isEmpty(days)){
+                                DaysField.setError("Days to pay is required");
+                            }
+
+
+                            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                             cash1= cash - Double.parseDouble(loan);
+                            Client aClient = new Client(ClientID,firstname,lastname,barangay,district,loan,days);
+                            Debt debt = new Debt(loan, days);
+                            Clientdb.child(ClientID).setValue(aClient);
+                            DatabaseReference CashDB = FirebaseDatabase.getInstance().getReference("cashonhand");
+                            CashDB.setValue(cash1);
+                        }
+                    });
+
+
+            return builder.create();
+        }
     }
 }

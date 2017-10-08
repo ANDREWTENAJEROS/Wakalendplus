@@ -41,7 +41,7 @@ public class customerlist extends ArrayAdapter<Client> {
         Client client = customerlists.get(position);
         String cname = client.getFirstname() + " " + client.getLastname();
         textViewName.setText(cname);
-        textViewBalance.setText(client.getLoan());
+        textViewBalance.setText(client.getBalance());
 
         return listViewItem;
     }
